@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Statistics Programming Club</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bg-glow2"></div>
+
+<!-- ══════════════════════════════════════════
+     SIDEBAR (desktop)
+══════════════════════════════════════════ -->
+<nav class="sb" id="sb">
+  <div class="sbh">
+    <div class="sbb">
+      <div class="lm"><a href="/">Statistics<span>.</span></a></div>
+      <div class="ls">// Programming Club</div>
+    </div>
+    <button class="sbt" id="sbt" title="Toggle sidebar">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+        <path d="M8.5 10.5L4.5 6.5L8.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <ul class="nis">
+    <li class="ni active" data-page="home"        data-tip="Home">        <span class="nic">~/</span><span class="nil">Home</span></li>
+    <li class="ni"        data-page="exec"         data-tip="Executives">  <span class="nic">{}</span><span class="nil">Executives</span></li>
+    <li class="ni"        data-page="alumni"       data-tip="Past Execs">  <span class="nic">[]</span><span class="nil">Past Executives</span></li>
+    <li class="ni"        data-page="ach"          data-tip="Achievements"><span class="nic">★</span> <span class="nil">Achievements</span></li>
+    <li class="ni"        data-page="events"       data-tip="Events">      <span class="nic">›_</span><span class="nil">Events</span></li>
+    <li class="ni"        data-page="about"        data-tip="About">       <span class="nic">?</span> <span class="nil">About / Join</span></li>
+  </ul>
+
+  <div class="sbf">
+    <div class="sbfd"></div>
+    <div class="sbfi">
+      <div class="st"><span class="std"></span>Active · 2024–25</div>
+      <p>Dept. of Computer Science<br>University of Dhaka</p>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     MOBILE TOP NAV
+══════════════════════════════════════════ -->
+<nav class="tn">
+  <div class="lm">Statistics<span style="color:var(--ac)">.</span></div>
+  <div class="hbg" id="hbg">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mm" id="mm">
+  <div class="mi active" data-page="home">  ~/&nbsp;&nbsp;Home</div>
+  <div class="mi"        data-page="exec">  {}&nbsp;&nbsp;Executives</div>
+  <div class="mi"        data-page="alumni">[]&nbsp;&nbsp;Past Executives</div>
+  <div class="mi"        data-page="ach">   ★&nbsp;&nbsp;Achievements</div>
+  <div class="mi"        data-page="events">›_&nbsp;&nbsp;Events</div>
+  <div class="mi"        data-page="about"> ?&nbsp;&nbsp;About / Join</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     MAIN CONTENT
+══════════════════════════════════════════ -->
+<main class="ct" id="ct">
+
+  <!-- ─────────────────────────────
+       HOME
+  ───────────────────────────── -->
+  <section class="pg active" id="page-home">
+    <div class="hero">
+
+      <div class="hero-left">
+        <div class="htag">Est. 2018 &nbsp;·&nbsp; Statistics Programming Club</div>
+        <h1 class="htitle">
+          We write code.<br>
+          <span class="ac">We build things.</span><br>
+          <span class="dm">We compete.</span>
+        </h1>
+        <p class="hdesc">
+          A community of programmers, problem-solvers, and builders.
+          From competitive programming to ML research and open-source —
+          this is where ideas become code.
+        </p>
+        <div class="focus-pills">
+          <span class="pill pill-py">🐍 Python</span>
+          <span class="pill pill-ml">🤖 AI / ML</span>
+          <span class="pill pill-st">📊 Statistics</span>
+          <span class="pill pill-ml">🧠 Deep Learning</span>
+          <!-- <span class="pill pill-cp">⚡ Competitive Programming</span> -->
+        </div>
+        <div class="stats">
+          <div><div class="snum">142</div><div class="slbl">// MEMBERS</div></div>
+          <div class="sdiv"></div>
+          <div><div class="snum">23</div><div class="slbl">// WINS</div></div>
+          <div class="sdiv"></div>
+          <div><div class="snum">31</div><div class="slbl">// PROJECTS</div></div>
+          <div class="sdiv"></div>
+          <div><div class="snum">7</div><div class="slbl">// YEARS</div></div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="term">
+          <div class="tbar">
+            <div class="dot dr"></div>
+            <div class="dot dy"></div>
+            <div class="dot dg"></div>
+            <span class="tttl">programming_club/train_model.py</span>
+          </div>
+          <div class="tbody">
+            <div class="tl"><span class="t-cm"># ML Workshop — Image Classifier</span></div>
+            <div class="tl"><span class="t-kw">import</span><span class="tc">torch</span></div>
+            <div class="tl"><span class="t-kw">import</span><span class="tc">torch.nn <span class="t-kw">as</span> nn</span></div>
+            <div class="tl"><span class="t-kw">from</span><span class="tc">torchvision <span class="t-kw">import</span> models</span></div>
+            <div class="tl">&nbsp;</div>
+            <div class="tl"><span class="t-fn">model</span><span class="tc">= models.<span class="t-fn">resnet18</span>(pretrained=<span class="t-kw">True</span>)</span></div>
+            <div class="tl"><span class="t-fn">optimizer</span><span class="tc">= torch.optim.<span class="t-fn">Adam</span>(</span></div>
+            <div class="tl"><span class="tc">&nbsp;&nbsp;&nbsp;&nbsp;model.parameters(), lr=<span class="t-num">1e-4</span>)</span></div>
+            <div class="tl">&nbsp;</div>
+            <div class="tl"><span class="t-fn">train</span><span class="tc">(model, epochs=<span class="t-num">10</span>)</span></div>
+            <div class="tl">&nbsp;</div>
+            <div class="tl"><span class="to">▸ Training complete. Results:</span></div>
+            <div class="t-chart">
+              <div class="t-bar-row">
+                <span class="t-bar-lbl">Train Acc</span>
+                <div class="t-bar-track"><div class="t-bar-fill f1"></div></div>
+                <span class="t-bar-val">92.4%</span>
+              </div>
+              <div class="t-bar-row">
+                <span class="t-bar-lbl">Val Acc</span>
+                <div class="t-bar-track"><div class="t-bar-fill f2"></div></div>
+                <span class="t-bar-val">78.1%</span>
+              </div>
+              <div class="t-bar-row">
+                <span class="t-bar-lbl">F1 Score</span>
+                <div class="t-bar-track"><div class="t-bar-fill f3"></div></div>
+                <span class="t-bar-val">0.851</span>
+              </div>
+              <div class="t-bar-row">
+                <span class="t-bar-lbl">Loss</span>
+                <div class="t-bar-track"><div class="t-bar-fill f4"></div></div>
+                <span class="t-bar-val">0.612</span>
+              </div>
+            </div>
+            <div class="tl">&nbsp;</div>
+            <div class="tl"><span class="tp">&gt;&gt;&gt;</span><span class="tcur"></span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────
+       CURRENT EXECUTIVES
+       Cards are injected by script.js
+       based on "current_committee" in database.json
+  ───────────────────────────── -->
+  <section class="pg" id="page-exec">
+    <div class="ph rv">
+      <div class="pe">// Current Session</div>
+      <h2 class="pt">Current <span>Executives</span></h2>
+      <p class="pd">The team leading Statistics Programming Club this year. Click any card to view their profile &amp; social links.</p>
+      <div class="sbadge" id="exec-session-badge">
+        <span class="bdot"></span>
+        <span id="exec-session-text">Active Session</span>
+      </div>
+    </div>
+
+    <!-- script.js appends .ec cards here -->
+    <div class="egrid rv" id="exec-grid"></div>
+  </section>
+
+  <!-- ─────────────────────────────
+       PAST EXECUTIVES
+       Year blocks are injected by script.js
+       for every committee that isn't current_committee
+  ───────────────────────────── -->
+  <section class="pg" id="page-alumni">
+    <div class="ph rv">
+      <div class="pe">// Alumni</div>
+      <h2 class="pt">Past <span>Executives</span></h2>
+      <p class="pd">The people who built what this club is today. Click any card to see their profile and links.</p>
+    </div>
+
+    <!-- script.js appends .ay year blocks here -->
+    <div id="alumni-content"></div>
+  </section>
+
+  <!-- ─────────────────────────────
+       ACHIEVEMENTS
+  ───────────────────────────── -->
+  <section class="pg" id="page-ach">
+    <div class="ph rv">
+      <div class="pe">// Trophy Room</div>
+      <h2 class="pt">Our <span>Achievements</span></h2>
+      <p class="pd">Competition results, recognitions, and milestones since 2018.</p>
+    </div>
+
+    <div class="tally rv">
+      <div class="tc2"><div class="tn2">8</div><div class="tl2">// GOLD</div></div>
+      <div class="tc2"><div class="tn2">9</div><div class="tl2">// SILVER</div></div>
+      <div class="tc2"><div class="tn2">6</div><div class="tl2">// BRONZE</div></div>
+      <div class="tc2"><div class="tn2">31</div><div class="tl2">// PROJECTS</div></div>
+    </div>
+
+    <div class="agrid rv">
+      <div class="ach gold">
+        <div class="ai">🥇</div>
+        <div class="ayr">2024 · ICPC REGIONAL</div>
+        <div class="atl">1st Place — ICPC Dhaka Regional Contest</div>
+        <div class="aev">International Collegiate Programming Contest</div>
+        <div class="amm"><strong>Team:</strong> Aryan H., Tanvir A., Lamia N.</div>
+      </div>
+      <div class="ach gold">
+        <div class="ai">🥇</div>
+        <div class="ayr">2024 · HACKATHON</div>
+        <div class="atl">1st Place — DU Tech Fest Hackathon</div>
+        <div class="aev">University of Dhaka Tech Festival</div>
+        <div class="amm"><strong>Project:</strong> AgriSense — Smart crop monitoring</div>
+      </div>
+      <div class="ach silver">
+        <div class="ai">🥈</div>
+        <div class="ayr">2023 · ICPC REGIONAL</div>
+        <div class="atl">2nd Place — ICPC Dhaka Regional</div>
+        <div class="aev">International Collegiate Programming Contest</div>
+        <div class="amm"><strong>Team:</strong> Karim U., Imran C., Hasib R.</div>
+      </div>
+      <div class="ach blue">
+        <div class="ai">🏆</div>
+        <div class="ayr">2023 · RESEARCH</div>
+        <div class="atl">Best Paper — IEEE Student Branch Conference</div>
+        <div class="aev">IEEE Bangladesh Section Student Conference</div>
+        <div class="amm"><strong>Authors:</strong> Karim U., Dipa R., Suriya B.</div>
+      </div>
+      <div class="ach gold">
+        <div class="ai">🥇</div>
+        <div class="ayr">2022 · CODEFORCES</div>
+        <div class="atl">National Rank #1 — Codeforces Round 850</div>
+        <div class="aev">Codeforces Rated Contest</div>
+        <div class="amm"><strong>Member:</strong> Imran Chowdhury</div>
+      </div>
+      <div class="ach silver">
+        <div class="ai">🥈</div>
+        <div class="ayr">2022 · HACKATHON</div>
+        <div class="atl">Runner-up — BASIS National ICT Awards</div>
+        <div class="aev">BASIS National ICT Awards (Student Category)</div>
+        <div class="amm"><strong>Project:</strong> EduTrack — Attendance system</div>
+      </div>
+      <div class="ach">
+        <div class="ai">🎖️</div>
+        <div class="ayr">2021 · COMMUNITY</div>
+        <div class="atl">Best Student Club — DU CSE Dept. Award</div>
+        <div class="aev">Dept. of Computer Science & Engineering, DU</div>
+        <div class="amm"><strong>Session:</strong> 2020–2021</div>
+      </div>
+      <div class="ach silver">
+        <div class="ai">🥈</div>
+        <div class="ayr">2021 · ICPC</div>
+        <div class="atl">2nd Place — BUET IUPC</div>
+        <div class="aev">BUET Inter-University Programming Contest</div>
+        <div class="amm"><strong>Team:</strong> Omar F., Rezaul K., Tanya I.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────
+       EVENTS
+  ───────────────────────────── -->
+  <section class="pg" id="page-events">
+    <div class="ph rv">
+      <div class="pe">// Schedule</div>
+      <h2 class="pt">Upcoming <span>Events</span></h2>
+      <p class="pd">Workshops, contests, and meetups. Open to all members — some open to the public.</p>
+    </div>
+
+    <div class="evl rv">
+      <div class="ev">
+        <div><div class="emo">MAY</div><div class="edy">12</div></div>
+        <div><div class="et">CP Workshop — Graph Algorithms</div><div class="em">2:00 PM · Room 301, CSE Building · All levels welcome</div></div>
+        <div class="etag tup">UPCOMING</div>
+      </div>
+      <div class="ev">
+        <div><div class="emo">MAY</div><div class="edy">18</div></div>
+        <div><div class="et">Weekly Practice Contest</div><div class="em">6:00 PM · Online (Codeforces) · Members only</div></div>
+        <div class="etag tup">UPCOMING</div>
+      </div>
+      <div class="ev">
+        <div><div class="emo">MAY</div><div class="edy">24</div></div>
+        <div><div class="et">Web Dev Bootcamp — Day 1</div><div class="em">10:00 AM · Lab 2, CSE Building · Open to all</div></div>
+        <div class="etag two">WORKSHOP</div>
+      </div>
+      <div class="ev">
+        <div><div class="emo">MAY</div><div class="edy">25</div></div>
+        <div><div class="et">Web Dev Bootcamp — Day 2</div><div class="em">10:00 AM · Lab 2, CSE Building · Open to all</div></div>
+        <div class="etag two">WORKSHOP</div>
+      </div>
+      <div class="ev">
+        <div><div class="emo">JUN</div><div class="edy">07</div></div>
+        <div><div class="et">Intra-Club Programming Contest 2025</div><div class="em">9:00 AM – 2:00 PM · Lab 1 &amp; 2, CSE Building · Members</div></div>
+        <div class="etag tco">CONTEST</div>
+      </div>
+      <div class="ev">
+        <div><div class="emo">JUN</div><div class="edy">20</div></div>
+        <div><div class="et">ICPC Selection Round — Trial</div><div class="em">10:00 AM · Online · Open to registered teams</div></div>
+        <div class="etag tco">CONTEST</div>
+      </div>
+    </div>
+
+    <p style="font-family:var(--fm);font-size:.7rem;color:var(--mut)">
+      // Events are posted to our Facebook group 1 week in advance.
+    </p>
+  </section>
+
+  <!-- ─────────────────────────────
+       ABOUT / JOIN
+  ───────────────────────────── -->
+  <section class="pg" id="page-about">
+    <div class="ph rv">
+      <div class="pe">// About</div>
+      <h2 class="pt">Who We <span>Are</span></h2>
+      <p class="pd">Founded in 2018 at the Dept. of Computer Science &amp; Engineering, University of Dhaka.</p>
+    </div>
+
+    <div class="abg rv">
+      <div class="abc">
+        <h3><span class="tag">01</span> Mission</h3>
+        <p>To cultivate a culture of programming excellence — from competitive coding to building products that matter. We believe the best engineers practice deliberately and ship relentlessly.</p>
+      </div>
+      <div class="abc">
+        <h3><span class="tag">02</span> What We Do</h3>
+        <p>Weekly workshops, monthly contests, annual hackathons, ICPC preparation, open-source projects, and industry speaker sessions. Something for every level of programmer.</p>
+      </div>
+      <div class="abc wide">
+        <h3><span class="tag">03</span> Our Community</h3>
+        <p>142 active members across all years of the CSE program. We welcome students from all departments who love programming. You don't need to be a CS major — just bring curiosity and consistency. Our alumni network spans Google, Meta, local startups, and top grad programs worldwide.</p>
+      </div>
+    </div>
+
+    <div class="mtr rv">
+      <div class="mtc">
+        <div class="mtd">// WEEKLY MEETUP</div>
+        <div class="mtt">Every Thursday</div>
+        <div class="mtl">5:00 PM · Room 301, CSE Building</div>
+      </div>
+      <div class="mtc">
+        <div class="mtd">// PRACTICE SESSION</div>
+        <div class="mtt">Every Saturday</div>
+        <div class="mtl">3:00 PM · Lab 2, CSE Building</div>
+      </div>
+      <div class="mtc">
+        <div class="mtd">// ONLINE CONTEST</div>
+        <div class="mtt">Bi-weekly</div>
+        <div class="mtl">6:00 PM · Codeforces Platform</div>
+      </div>
+    </div>
+
+    <div class="jcta rv">
+      <div>
+        <h3>Ready to <span>join</span>?</h3>
+        <p>Membership is open at the start of each semester. Fill out the form and one of our executives will be in touch within 48 hours.</p>
+      </div>
+      <a class="bjoin" href="mailto:join@syntaxclub.ac">Apply for Membership →</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══════════════════════════════════════════
+     PROFILE MODAL
+══════════════════════════════════════════ -->
+<div class="ovl" id="ov">
+  <div class="mdl">
+    <button class="mclose" id="mc">✕</button>
+    <div class="mbody">
+      <div class="mtop">
+        <div class="mav" id="mav"></div>
+        <div>
+          <div class="mrl" id="mrl"></div>
+          <div class="mnm" id="mnm"></div>
+          <div class="mtgs" id="mtgs"></div>
+        </div>
+      </div>
+      <div class="mbi" id="mbi"></div>
+      <div class="mso-label">// Connect</div>
+      <div class="mso" id="mso"></div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

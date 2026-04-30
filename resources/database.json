@@ -7,38 +7,6 @@
       "total_members": "500",
       "members": [
         {
-          "id": "nadia",
-          "initial": "N",
-          "role": "Vice President",
-          "role_display": "// VICE PRESIDENT",
-          "name": "Nadia Rahman",
-          "department": "CSE · Year 3",
-          "is_president": false,
-          "bio": "Oversees club operations and member welfare. ML researcher — her NLP paper was accepted at ACL 2024. TA for the Algorithms course.",
-          "socials": [
-            {
-              "type": "linkedin",
-              "label": "LinkedIn",
-              "url": "https://linkedin.com/in/nadia-rahman"
-            },
-            {
-              "type": "github",
-              "label": "GitHub",
-              "url": "https://github.com/nadia-rahman"
-            },
-            {
-              "type": "facebook",
-              "label": "Facebook",
-              "url": "https://facebook.com/nadia.rahman"
-            },
-            {
-              "type": "email",
-              "label": "Email",
-              "url": "mailto:nadia@syntaxclub.ac"
-            }
-          ]
-        },
-        {
           "id": "aryan",
           "initial": "A",
           "role": "President",
@@ -72,6 +40,38 @@
               "type": "email",
               "label": "Email",
               "url": "mailto:aryan@syntaxclub.ac"
+            }
+          ]
+        },
+        {
+          "id": "nadia",
+          "initial": "N",
+          "role": "Vice President",
+          "role_display": "// VICE PRESIDENT",
+          "name": "Nadia Rahman",
+          "department": "CSE · Year 3",
+          "is_president": false,
+          "bio": "Oversees club operations and member welfare. ML researcher — her NLP paper was accepted at ACL 2024. TA for the Algorithms course.",
+          "socials": [
+            {
+              "type": "linkedin",
+              "label": "LinkedIn",
+              "url": "https://linkedin.com/in/nadia-rahman"
+            },
+            {
+              "type": "github",
+              "label": "GitHub",
+              "url": "https://github.com/nadia-rahman"
+            },
+            {
+              "type": "facebook",
+              "label": "Facebook",
+              "url": "https://facebook.com/nadia.rahman"
+            },
+            {
+              "type": "email",
+              "label": "Email",
+              "url": "mailto:nadia@syntaxclub.ac"
             }
           ]
         },

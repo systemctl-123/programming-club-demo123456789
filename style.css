@@ -463,7 +463,7 @@ ul{list-style:none}
 }
 
 /* ── PROJECTS ── */
-/* .proj-grid {
+.proj-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.1rem;
@@ -479,7 +479,7 @@ ul{list-style:none}
   .proj-grid {
     grid-template-columns: 1fr;
   }
-} */
+}
 
 .proj-card {
   background: var(--surface);

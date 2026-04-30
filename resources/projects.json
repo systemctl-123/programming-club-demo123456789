@@ -1,0 +1,100 @@
+{
+  "projects": [
+    {
+      "id": "proj-001",
+      "title": "StatViz \u2014 Interactive Statistics Dashboard",
+      "description": "A web-based dashboard for visualizing statistical distributions, hypothesis tests, and regression outputs. Built to help students understand core stat concepts visually.",
+      "status": "active",
+      "tags": [
+        "Python",
+        "Plotly",
+        "Dash",
+        "Statistics"
+      ],
+      "members": "Aryan H., Nadia R., Maliha C.",
+      "year": "2024",
+      "link": "https://github.com/stat-club-cu/statviz",
+      "demo_link": "www.google.com"
+    },
+    {
+      "id": "proj-002",
+      "title": "ML Notebook Archive",
+      "description": "A curated, well-documented collection of Jupyter notebooks covering core ML algorithms from scratch \u2014 linear regression to transformers \u2014 maintained for club workshops.",
+      "status": "active",
+      "tags": [
+        "Python",
+        "Jupyter",
+        "Scikit-learn",
+        "PyTorch"
+      ],
+      "members": "Tanvir A., Rafiqul I.",
+      "year": "2024",
+      "link": "https://github.com/stat-club-cu/ml-notebooks",
+      "demo_link": ""
+    },
+    {
+      "id": "proj-003",
+      "title": "CU Attendance Tracker \u2014 EduTrack",
+      "description": "A smart attendance management system for university departments, featuring QR-based check-in, automated reports, and department-level analytics.",
+      "status": "completed",
+      "tags": [
+        "React",
+        "Node.js",
+        "MongoDB",
+        "QR Code"
+      ],
+      "members": "Badrul A., Zahir H., Farhan K.",
+      "year": "2023",
+      "link": "https://github.com/stat-club-cu/edutrack",
+      "demo_link": ""
+    },
+    {
+      "id": "proj-004",
+      "title": "AgriSense \u2014 Crop Monitoring System",
+      "description": "An IoT-integrated smart farming tool that uses sensor data and ML models to predict crop health, water needs, and yield estimates. Winner of DU Tech Fest Hackathon 2024.",
+      "status": "completed",
+      "tags": [
+        "Python",
+        "TensorFlow",
+        "IoT",
+        "FastAPI"
+      ],
+      "members": "Aryan H., Tanvir A., Lamia N.",
+      "year": "2024",
+      "link": "https://github.com/stat-club-cu/agrisense",
+      "demo_link": ""
+    },
+    {
+      "id": "proj-005",
+      "title": "NLP for Low-Resource Bangla",
+      "description": "Research project on natural language processing for Bangla \u2014 a low-resource language. Focuses on named entity recognition and sentiment analysis using fine-tuned transformer models.",
+      "status": "research",
+      "tags": [
+        "Python",
+        "HuggingFace",
+        "NLP",
+        "Bangla"
+      ],
+      "members": "Nadia R., Suriya B.",
+      "year": "2023",
+      "link": "https://github.com/stat-club-cu/bangla-nlp",
+      "demo_link": ""
+    },
+    {
+      "id": "proj-006",
+      "title": "Club Website",
+      "description": "This very website \u2014 an open-source, data-driven static site for the Statistics Programming Club. All content is managed through JSON files with a custom visual editor.",
+      "status": "active",
+      "tags": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "JSON"
+      ],
+      "members": "Muhammad N.",
+      "year": "2026",
+      "link": "https://github.com/stat-club-cu/website",
+      "demo_link": ""
+    }
+  ]
+}

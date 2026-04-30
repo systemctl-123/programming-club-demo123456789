@@ -125,6 +125,8 @@ document.getElementById('sbt').addEventListener('click', () => {
   contentEl.classList.toggle('col');
 });
 
+document.getElementById("current-year").textContent = new Date().getFullYear();
+
 /* ══════════════════════════════════════════════
    PAGE ROUTER
 ══════════════════════════════════════════════ */

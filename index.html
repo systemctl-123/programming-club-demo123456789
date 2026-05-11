@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Statistics Programming Club</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,19 +22,24 @@
       <div class="lm"><a href="">Statistics<span>.</span></div>
       <div class="ls">// Programming Club</a></div>
     </div>
-    <button class="sbt" id="sbt" title="Toggle sidebar">
-      <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-        <path d="M8.5 10.5L4.5 6.5L8.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <div id="theme-toggle" style="cursor: pointer" title="Toggle Theme">
+        <div class="theme-switch"><div class="switch-thumb"></div></div>
+      </div>
+      <button class="sbt" id="sbt" title="Toggle sidebar">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M8.5 10.5L4.5 6.5L8.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
   </div>
 
   <ul class="nis">
     <li class="ni active" data-page="home"        data-tip="Home">        <span class="nic">~/</span><span class="nil">Home</span></li>
     <li class="ni"        data-page="exec"         data-tip="Executives">  <span class="nic">{}</span><span class="nil">Executives</span></li>
     <li class="ni"        data-page="alumni"       data-tip="Past Execs">  <span class="nic">[]</span><span class="nil">Past Executives</span></li>
-    <li class="ni"        data-page="projects"     data-tip="Projects">    <span class="nic">⬡</span> <span class="nil">Projects</span></li>
-    <li class="ni"        data-page="ach"          data-tip="Achievements"><span class="nic">★</span> <span class="nil">Achievements</span></li>
+    <li class="ni"        data-page="projects"     data-tip="Projects & Publications">    <span class="nic">⬡</span> <span class="nil">Projects & Publications</span></li>
+    <li class="ni"        data-page="achievements"          data-tip="Achievements"><span class="nic">★</span> <span class="nil">Achievements</span></li>
     <li class="ni"        data-page="events"       data-tip="Events">      <span class="nic">›_</span><span class="nil">Events</span></li>
     <li class="ni"        data-page="about"        data-tip="About">       <span class="nic">?</span> <span class="nil">About / Join</span></li>
   </ul>
@@ -42,7 +47,9 @@
   <div class="sbf">
     <div class="sbfd"></div>
     <div class="sbfi">
-      <div class="st"><span class="std"></span>Active · <span id="current-year"></span></div>
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .4rem;">
+        <div class="st" style="margin-bottom: 0;"><span class="std"></span>Active · <span id="current-year"></span></div>
+      </div>
       <p>Department of Statistics<br>University of Chittagong</p>
     </div>
   </div>
@@ -53,8 +60,13 @@
 ══════════════════════════════════════════ -->
 <nav class="tn">
   <div class="lm"><a href="">Statistics<span style="color:var(--ac)">.</span></a></div>
-  <div class="hbg" id="hbg">
-    <span></span><span></span><span></span>
+  <div class="tn-right">
+    <button class="tn-theme-toggle" id="theme-toggle-mob" title="Toggle theme">
+      <div class="theme-switch"><div class="switch-thumb"></div></div>
+    </button>
+    <div class="hbg" id="hbg">
+      <span></span><span></span><span></span>
+    </div>
   </div>
 </nav>
 
@@ -62,8 +74,8 @@
   <div class="mi active" data-page="home">  ~/&nbsp;&nbsp;Home</div>
   <div class="mi"        data-page="exec">  {}&nbsp;&nbsp;Executives</div>
   <div class="mi"        data-page="alumni">[]&nbsp;&nbsp;Past Executives</div>
-  <div class="mi"        data-page="projects">⬡&nbsp;&nbsp;Projects</div>
-  <div class="mi"        data-page="ach">   ★&nbsp;&nbsp;Achievements</div>
+  <div class="mi"        data-page="projects">⬡&nbsp;&nbsp;Projects & Publications</div>
+  <div class="mi"        data-page="achievements">   ★&nbsp;&nbsp;Achievements</div>
   <div class="mi"        data-page="events">›_&nbsp;&nbsp;Events</div>
   <div class="mi"        data-page="about"> ?&nbsp;&nbsp;About / Join</div>
 </div>
@@ -80,7 +92,7 @@
     <div class="hero">
 
       <div class="hero-left">
-        <div class="htag">Est. 2023 &nbsp;·&nbsp; Statistics Programming Club</div>
+        <div class="htag">Est. 2022 &nbsp;·&nbsp; Statistics Programming Club</div>
         <h1 class="htitle">
           We write code.<br>
           <span class="ac">We build things.</span><br>
@@ -117,43 +129,7 @@
             <div class="dot dg"></div>
             <span class="tttl">programming_club/train_model.py</span>
           </div>
-          <div class="tbody">
-            <div class="tl"><span class="t-cm"># ML Workshop — Image Classifier</span></div>
-            <div class="tl"><span class="t-kw">import</span><span class="tc">torch</span></div>
-            <div class="tl"><span class="t-kw">import</span><span class="tc">torch.nn <span class="t-kw">as</span> nn</span></div>
-            <div class="tl"><span class="t-kw">from</span><span class="tc">torchvision <span class="t-kw">import</span> models</span></div>
-            <div class="tl">&nbsp;</div>
-            <div class="tl"><span class="t-fn">model</span><span class="tc">= models.<span class="t-fn">resnet18</span>(pretrained=<span class="t-kw">True</span>)</span></div>
-            <div class="tl"><span class="t-fn">optimizer</span><span class="tc">= torch.optim.<span class="t-fn">Adam</span>(</span></div>
-            <div class="tl"><span class="tc">&nbsp;&nbsp;&nbsp;&nbsp;model.parameters(), lr=<span class="t-num">1e-4</span>)</span></div>
-            <div class="tl">&nbsp;</div>
-            <div class="tl"><span class="t-fn">train</span><span class="tc">(model, epochs=<span class="t-num">10</span>)</span></div>
-            <div class="tl">&nbsp;</div>
-            <div class="tl"><span class="to">▸ Training complete. Results:</span></div>
-            <div class="t-chart">
-              <div class="t-bar-row">
-                <span class="t-bar-lbl">Train Acc</span>
-                <div class="t-bar-track"><div class="t-bar-fill f1"></div></div>
-                <span class="t-bar-val">92.4%</span>
-              </div>
-              <div class="t-bar-row">
-                <span class="t-bar-lbl">Val Acc</span>
-                <div class="t-bar-track"><div class="t-bar-fill f2"></div></div>
-                <span class="t-bar-val">78.1%</span>
-              </div>
-              <div class="t-bar-row">
-                <span class="t-bar-lbl">F1 Score</span>
-                <div class="t-bar-track"><div class="t-bar-fill f3"></div></div>
-                <span class="t-bar-val">0.851</span>
-              </div>
-              <div class="t-bar-row">
-                <span class="t-bar-lbl">Loss</span>
-                <div class="t-bar-track"><div class="t-bar-fill f4"></div></div>
-                <span class="t-bar-val">0.612</span>
-              </div>
-            </div>
-            <div class="tl">&nbsp;</div>
-            <div class="tl"><span class="tp">&gt;&gt;&gt;</span><span class="tcur"></span></div>
+          <div class="tbody" id="term-body"></div>
           </div>
         </div>
       </div>
@@ -204,7 +180,7 @@
   <section class="pg" id="page-projects">
     <div class="ph rv">
       <div class="pe">// Our Work</div>
-      <h2 class="pt">Club <span>Projects</span></h2>
+      <h2 class="pt">Club <span>Projects & Publications</span></h2>
       <p class="pd">Open-source tools, research projects, and applications built by club members.</p>
     </div>
 
@@ -216,11 +192,11 @@
        ACHIEVEMENTS
        Tally + cards injected by script.js from achievements.json
   ───────────────────────────── -->
-  <section class="pg" id="page-ach">
+  <section class="pg" id="page-achievements">
     <div class="ph rv">
       <div class="pe">// Trophy Room</div>
       <h2 class="pt">Our <span>Achievements</span></h2>
-      <p class="pd">Competition results, recognitions, and milestones since 2018.</p>
+      <p class="pd">Competition results, recognitions, and milestones since 2022.</p>
     </div>
 
     <!-- Tally strip: filled from achievements.json → tally[] -->
@@ -254,21 +230,21 @@
     <div class="ph rv">
       <div class="pe">// About</div>
       <h2 class="pt">Who We <span>Are</span></h2>
-      <p class="pd">Founded in 2018 at the Dept. of Computer Science &amp; Engineering, University of Dhaka.</p>
+      <p class="pd">Founded in 2022 at the Dept. of Statistics, University of Chittagong.</p>
     </div>
 
     <div class="abg rv">
       <div class="abc">
         <h3><span class="tag">01</span> Mission</h3>
-        <p>To cultivate a culture of programming excellence — from competitive coding to building products that matter. We believe the best engineers practice deliberately and ship relentlessly.</p>
+        <p>To cultivate a culture of data-driven programming excellence — from competitive data science to building data products that matter. We believe the best statisticians practice deliberately and ship insights relentlessly.</p>
       </div>
       <div class="abc">
         <h3><span class="tag">02</span> What We Do</h3>
-        <p>Weekly workshops, monthly contests, annual hackathons, ICPC preparation, open-source projects, and industry speaker sessions. Something for every level of programmer.</p>
+        <p>Weekly coding labs, monthly data challenges, annual datathons, Kaggle team preparation, open-data projects, and guest talks from industry data scientists. Something for every level of data practitioner.</p>
       </div>
       <div class="abc wide">
         <h3><span class="tag">03</span> Our Community</h3>
-        <p>142 active members across all years of the CSE program. We welcome students from all departments who love programming. You don't need to be a CS major — just bring curiosity and consistency. Our alumni network spans Google, Meta, local startups, and top grad programs worldwide.</p>
+        <p>Active members across all years of the Statistics program. We bring together Stat majors and minors who share a passion for programming with data. You don’t need to arrive as an expert — just bring curiosity and consistency. Our alumni network spans data science teams at top tech firms, impactful startups, research institutes, and leading graduate programs worldwide.</p>
       </div>
     </div>
 
@@ -276,17 +252,17 @@
       <div class="mtc">
         <div class="mtd">// WEEKLY MEETUP</div>
         <div class="mtt">Every Thursday</div>
-        <div class="mtl">5:00 PM · Room 301, CSE Building</div>
+        <div class="mtl">3:00 PM · Room 406, Faculty Building</div>
       </div>
       <div class="mtc">
         <div class="mtd">// PRACTICE SESSION</div>
         <div class="mtt">Every Saturday</div>
-        <div class="mtl">3:00 PM · Lab 2, CSE Building</div>
+        <div class="mtl">3:00 PM · Lab 1, Faculty Building</div>
       </div>
       <div class="mtc">
         <div class="mtd">// ONLINE CONTEST</div>
-        <div class="mtt">Bi-weekly</div>
-        <div class="mtl">6:00 PM · Codeforces Platform</div>
+        <div class="mtt">Monthly</div>
+        <div class="mtl">8:00 PM · HackerRank Platform</div>
       </div>
     </div>
 
@@ -295,7 +271,7 @@
         <h3>Ready to <span>join</span>?</h3>
         <p>Membership is open at the start of each semester. Fill out the form and one of our executives will be in touch within 48 hours.</p>
       </div>
-      <a class="bjoin" href="mailto:join@syntaxclub.ac">Apply for Membership →</a>
+      <a class="bjoin" href="mailto:programmingclub.stat.cu@gmail.com">Apply for Membership →</a>
     </div>
   </section>
 

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events Editor — Statistics Programming Club</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:#060910; --s:#0d1117; --s2:#161b22; --s3:#1f2937;
+      --b:rgba(255,255,255,.07); --b2:rgba(255,255,255,.13); --b3:rgba(255,255,255,.22);
+      --txt:#e6edf3; --mut:rgba(230,237,243,.45);
+      --ac:#00d97e; --acd:rgba(0,217,126,.1); --acg:rgba(0,217,126,.25);
+      --bl:#58a6ff; --bld:rgba(88,166,255,.1);
+      --pu:#a78bfa; --py:#fbbf24;
+      --red:#f87171; --redd:rgba(248,113,113,.1);
+      --or:#f0883e;
+      --fd:'Syne',sans-serif; --fm:'JetBrains Mono',monospace;
+
+      /* Event type colours */
+      --col-upcoming: var(--ac);
+      --col-workshop: var(--bl);
+      --col-contest:  var(--or);
+      --col-seminar:  var(--pu);
+      --col-other:    var(--ac);
+    }
+    body { font-family:var(--fd); background:var(--bg); color:var(--txt); min-height:100vh; font-size:16px; }
+    body::before { content:''; position:fixed; inset:0; background-image:radial-gradient(circle,rgba(255,255,255,.04) 1px,transparent 1px); background-size:28px 28px; pointer-events:none; z-index:0; }
+    .glow { position:fixed; top:-15%; right:-8%; width:500px; height:500px; background:radial-gradient(circle,rgba(88,166,255,.05) 0%,transparent 65%); pointer-events:none; z-index:0; }
+    * { position:relative; z-index:1; } .glow { z-index:0; }
+    a { color:inherit; text-decoration:none; }
+
+    /* ── TOPBAR ── */
+    .topbar { position:sticky; top:0; z-index:100; background:rgba(13,17,23,.92); backdrop-filter:blur(14px); border-bottom:1px solid var(--b); padding:1.1rem 2.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    .topbar-left { display:flex; align-items:center; gap:1.25rem; }
+    .logo { font-family:var(--fd); font-size:1.4rem; font-weight:800; letter-spacing:-.02em; }
+    .logo span { color:var(--ac); }
+    .logo-sub { font-family:var(--fm); font-size:.68rem; color:var(--mut); letter-spacing:.1em; }
+    .editor-badge { padding:.28rem .85rem; border-radius:4px; background:var(--bld); border:1px solid rgba(88,166,255,.25); font-family:var(--fm); font-size:.7rem; color:var(--bl); letter-spacing:.08em; }
+    .topbar-nav { display:flex; gap:.5rem; }
+    .nav-link { padding:.45rem 1rem; border-radius:7px; font-family:var(--fm); font-size:.75rem; color:var(--mut); border:1px solid var(--b); transition:all .18s; }
+    .nav-link:hover { background:var(--s2); color:var(--txt); border-color:var(--b2); }
+    .topbar-actions { display:flex; gap:.75rem; align-items:center; }
+
+    /* ── BUTTONS ── */
+
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .65rem 1.35rem; border-radius: 8px; font-family: var(--fd);
+      font-size: .95rem; font-weight: 600; cursor: pointer; border: 1px solid transparent;
+      transition: all .18s ease; white-space: nowrap;
+    }
+    .btn-primary { background: var(--ac); color: #000; }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px var(--acg); }
+    .btn-secondary { background: var(--s2); border-color: var(--b2); color: var(--txt); }
+    .btn-secondary:hover { background: var(--s3); border-color: var(--b3); }
+    .btn-ghost { background: transparent; border-color: var(--b2); color: var(--mut); }
+    .btn-ghost:hover { border-color: var(--b3); color: var(--txt); background: var(--s2); }
+    .btn-sm { padding: .5rem 1rem; font-size: .85rem; }
+    .btn-icon { padding: .5rem; border-radius: 7px; background: transparent; border: 1px solid var(--b); color: var(--mut); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 1rem; transition: all .18s; }
+    .btn-icon:hover { background: var(--s2); color: var(--txt); border-color: var(--b2); }
+    .btn-icon.danger:hover { background: var(--redd); color: var(--red); border-color: rgba(248,113,113,.25); }
+
+    .main { display: grid; grid-template-columns: 1fr 420px; min-height: calc(100vh - 66px); }
+    .editor-panel { padding: 2.5rem 3rem; border-right: 1px solid var(--b); overflow-y: auto; }
+    .preview-panel { padding: 2rem; background: var(--s); overflow-y: auto; position: sticky; top: 66px; height: calc(100vh - 66px); display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .load-screen { display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 66px); padding: 2rem; }
+    .load-card { background: var(--s); border: 1px solid var(--b2); border-radius: 16px; padding: 3.5rem; text-align: center; max-width: 560px; width: 100%; }
+    .load-icon { font-size: 3rem; margin-bottom: 1.5rem; }
+    .load-card h2 { font-size: 1.75rem; font-weight: 800; margin-bottom: .6rem; }
+    .load-card p { color: var(--mut); font-size: 1rem; line-height: 1.7; margin-bottom: 2rem; }
+    .dropzone { border: 2px dashed var(--b2); border-radius: 12px; padding: 2.5rem; margin-bottom: 1.5rem; cursor: pointer; transition: border-color .2s, background .2s; font-family: var(--fm); font-size: .9rem; color: var(--mut); }
+    .load-divider { display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0; }
+    .load-divider::before, .load-divider::after { content: ''; flex: 1; height: 1px; background: var(--b); }
+    .load-divider span { font-family: var(--fm); font-size: .75rem; color: var(--mut); }
+
+    .section-title { font-size: 1.3rem; font-weight: 800; letter-spacing: -.01em; margin-bottom: 1.5rem; display: flex; align-items: center; gap: .85rem; }
+    .section-title .eyebrow { font-family: var(--fm); font-size: .75rem; letter-spacing: .12em; font-weight: 400; color: var(--bl); }
+    .divider { height: 1px; background: var(--b); margin: 2.5rem 0; }
+
+    .field { display: flex; flex-direction: column; gap: .45rem; }
+    .field label { font-family: var(--fm); font-size: .72rem; color: var(--mut); letter-spacing: .08em; }
+    .field input, .field select, .field textarea { background: var(--s2); border: 1px solid var(--b2); border-radius: 8px; color: var(--txt); font-family: var(--fm); font-size: .92rem; padding: .7rem 1rem; outline: none; transition: border-color .18s; width: 100%; }
+    .field textarea { resize: vertical; min-height: 100px; font-family: var(--fd); font-size: .95rem; }
+    .field input::placeholder, .field textarea::placeholder { color: var(--mut); opacity: 1; }
+
+    .preview-header { display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    .preview-title { font-family: var(--fm); font-size: .8rem; color: var(--mut); letter-spacing: .1em; display: flex; align-items: center; gap: .5rem; }
+    .json-box { flex: 1; background: var(--bg); border: 1px solid var(--b); border-radius: 9px; padding: 1.25rem; overflow: auto; font-family: var(--fm); font-size: .78rem; line-height: 1.8; white-space: pre; color: var(--mut); }
+
+    .toast-wrap { position: fixed; bottom: 1.75rem; right: 1.75rem; z-index: 999; display: flex; flex-direction: column; gap: .6rem; }
+    .toast { background: var(--s2); border: 1px solid var(--b2); border-radius: 10px; padding: .9rem 1.5rem; font-size: .92rem; font-weight: 600; display: flex; align-items: center; gap: .65rem; animation: toastIn .3s ease both; max-width: 340px; }
+    .empty { text-align: center; padding: 2.5rem 1rem; color: var(--mut); font-family: var(--fm); font-size: .9rem; }
+    .empty-icon { font-size: 2rem; margin-bottom: .6rem; }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--b2); border-radius: 3px; }
+
+    @media(max-width: 900px) { .main { grid-template-columns: 1fr; } .preview-panel { position: static; height: auto; max-height: 400px; } }
+
+    /* ── NOTE FIELD ── */
+    .note-field { background: var(--s); border: 1px solid var(--b); border-radius: 10px; padding: 1.35rem; margin-bottom: 2rem; }
+    .note-field label { font-family: var(--fm); font-size: .72rem; color: var(--mut); letter-spacing: .08em; display: block; margin-bottom: .6rem; }
+    .note-field input { background: var(--s2); border: 1px solid var(--b2); border-radius: 8px; color: var(--txt); font-family: var(--fm); font-size: .92rem; padding: .7rem 1rem; outline: none; width: 100%; transition: border-color .18s; }
+
+    .sort-notice { font-family: var(--fm); font-size: .75rem; color: var(--mut); margin-bottom: 1rem; padding: .65rem 1.1rem; background: var(--s); border: 1px solid var(--b); border-radius: 8px; }
+
+    /* ── EVENT CARDS ── */
+    .ev-list { display: flex; flex-direction: column; gap: .85rem; }
+    .ev-card { background: var(--s); border: 1px solid var(--b); border-radius: 12px; overflow: hidden; transition: border-color .18s; }
+    .ev-card.open { border-color: var(--b2); }
+    .ev-header { display: flex; align-items: center; gap: 1rem; padding: 1.2rem 1.5rem; cursor: pointer; transition: background .15s; user-select: none; }
+    .ev-header:hover { background: var(--s2); }
+    .ev-hdate { text-align: center; flex-shrink: 0; width: 52px; }
+    .ev-hmon { font-family: var(--fm); font-size: .65rem; color: var(--mut); letter-spacing: .1em; }
+    .ev-hday { font-size: 1.8rem; font-weight: 800; line-height: 1; color: var(--bl); }
+    .ev-hinfo { flex: 1; min-width: 0; }
+    .ev-htitle { font-size: 1rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ev-hmeta  { font-family: var(--fm); font-size: .72rem; color: var(--mut); margin-top: .15rem; }
+    .ev-type-tag { padding: .28rem .75rem; border-radius: 4px; font-family: var(--fm); font-size: .68rem; letter-spacing: .06em; white-space: nowrap; }
+    .tag-upcoming { background: var(--acd); color: var(--ac); }
+    .tag-workshop  { background: var(--bld); color: var(--bl); }
+    .tag-contest   { background: rgba(240,136,62,.1); color: var(--or); }
+    .tag-seminar   { background: rgba(167,139,250,.1); color: var(--pu); }
+    .tag-other     { background: var(--acd); color: var(--ac); }
+    .ev-body { display: none; padding: .5rem 1.5rem 1.5rem; border-top: 1px solid var(--b); }
+    .ev-card.open .ev-body { display: block; }
+    .ev-fields { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; margin-top: 1rem; }
+    .ev-fields .full { grid-column: span 2; }
+    .field input[type="date"] { color-scheme: dark; }
+    .j-key{color:var(--bl)} .j-str{color:var(--py)} .j-bool{color:var(--pu)} .j-num{color:var(--or)} .j-null{color:var(--red)}
+    .toast.success { border-color: rgba(0,217,126,.3); color: var(--ac); }
+    .toast.error   { border-color: rgba(248,113,113,.3); color: var(--red); }
+    @keyframes toastIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.75)} }
+    .preview-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--bl); animation: pulse 2s ease infinite; }
+    .drag-handle{cursor:grab;color:var(--mut);font-size:1rem;padding:.2rem .3rem;border-radius:4px;transition:color .15s,background .15s;user-select:none;flex-shrink:0;}
+    .drag-handle:active{cursor:grabbing;} .drag-handle:hover{color:var(--txt);background:var(--s3);}
+    .dragging{opacity:.4;border:1px dashed var(--b3)!important;}
+    .topbar-nav { display:flex; gap:.5rem; } .nav-link { padding:.5rem 1.1rem; border-radius:7px; font-family:var(--fm); font-size:.8rem; color:var(--mut); border:1px solid var(--b); transition:all .18s; text-decoration:none; } .nav-link:hover { background:var(--s2); color:var(--txt); border-color:var(--b2); }
+
+  </style>
+</head>
+<body>
+<div class="glow"></div>
+
+<header class="topbar">
+  <div class="topbar-left">
+    <div>
+      <div class="logo" style="cursor:pointer" onclick="location.reload()" title="Click to reload">Statistics<span>.</span></div>
+      <div class="logo-sub">// Programming Club</div>
+    </div>
+    <span class="editor-badge">EVENTS EDITOR</span>
+  </div>
+  <div class="topbar-nav">
+    <a class="nav-link" href="database-editor.html">👥 Members</a>
+    <a class="nav-link" href="achievements-editor.html">🏆 Achievements</a>
+    <a class="nav-link" href="projects-editor.html">⬡ Projects</a>
+    <a class="nav-link" href="../index.html">🌐 View Site</a>
+  </div>
+  <div class="topbar-actions">
+    <button class="btn btn-secondary btn-sm" id="btn-load-new" style="display:none">📂 Load File</button>
+    <button class="btn btn-secondary btn-sm" id="btn-copy"     style="display:none">📋 Copy JSON</button>
+    <button class="btn btn-primary btn-sm"   id="btn-export"   style="display:none">⬇ Export events.json</button>
+  </div>
+</header>
+
+<!-- LOAD SCREEN -->
+<div class="load-screen" id="load-screen">
+  <div class="load-card">
+    <div class="load-icon">📅</div>
+    <h2>Events Editor</h2>
+    <p>Load your <code style="font-family:var(--fm);color:var(--bl)">events.json</code> to start editing, or create a fresh one.</p>
+    <div class="dropzone" id="dropzone">
+      <div>⬆ Drop events.json here</div>
+      <div style="margin-top:.4rem;font-size:.7rem">or click to browse</div>
+      <input type="file" id="file-input" accept=".json" style="position:absolute;inset:0;opacity:0;cursor:pointer">
+    </div>
+    <div class="load-divider"><span>OR</span></div>
+    <button class="btn btn-ghost" style="width:100%;justify-content:center" id="btn-new">✦ Start with empty file</button>
+  </div>
+</div>
+
+<!-- EDITOR -->
+<div class="main" id="editor-main" style="display:none">
+  <div class="editor-panel">
+
+    <!-- NOTE -->
+    <div class="note-field">
+      <label>FOOTER NOTE (shown below the events list)</label>
+      <input type="text" id="note-input" placeholder="Events are posted to our Facebook group 1 week in advance.">
+    </div>
+
+    <!-- EVENTS -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem">
+      <div class="section-title" style="margin-bottom:0"><span class="eyebrow">// SCHEDULE</span> Events</div>
+      <button class="btn btn-ghost btn-sm" id="btn-add-ev">+ Add Event</button>
+    </div>
+    <div class="sort-notice">ℹ Events are automatically sorted by date on the website.</div>
+    <div class="ev-list" id="ev-list"></div>
+
+  </div>
+
+  <div class="preview-panel">
+    <div class="preview-header">
+      <div class="preview-title"><span class="preview-dot"></span>LIVE PREVIEW</div>
+      <span style="font-family:var(--fm);font-size:.65rem;color:var(--mut)" id="preview-count"></span>
+    </div>
+    <div class="json-box" id="json-preview"></div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+<input type="file" id="reload-input" accept=".json" style="display:none">
+
+<script>
+let DB = null;
+const MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+const TYPES  = ['upcoming','workshop','contest','seminar','other'];
+const TYPE_LABEL = { upcoming:'UPCOMING', workshop:'WORKSHOP', contest:'CONTEST', seminar:'SEMINAR', other:'EVENT' };
+const TYPE_CLASS = { upcoming:'tag-upcoming', workshop:'tag-workshop', contest:'tag-contest', seminar:'tag-seminar', other:'tag-other' };
+
+function toast(msg, type='success') {
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.textContent = msg;
+  document.getElementById('toast-wrap').appendChild(el);
+  setTimeout(() => el.remove(), 3000);
+}
+
+function syntaxHL(json) {
+  return json.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, m => {
+      if (/^"/.test(m)) return /:$/.test(m) ? `<span class="j-key">${m}</span>` : `<span class="j-str">${m}</span>`;
+      if (/true|false/.test(m)) return `<span class="j-bool">${m}</span>`;
+      if (/null/.test(m)) return `<span class="j-null">${m}</span>`;
+      return `<span class="j-num">${m}</span>`;
+    });
+}
+
+function updatePreview() {
+  if (!DB) return;
+  document.getElementById('json-preview').innerHTML = syntaxHL(JSON.stringify(DB, null, 2));
+  document.getElementById('preview-count').textContent = `${DB.events.length} event${DB.events.length !== 1 ? 's' : ''}`;
+}
+
+function dateDisplay(dateStr) {
+  if (!dateStr) return { mon:'???', day:'?' };
+  const d = new Date(dateStr);
+  return { mon: MONTHS[d.getMonth()] || '???', day: d.getDate() || '?' };
+}
+
+/* ── RENDER ── */
+function renderAll() {
+  document.getElementById('note-input').value = DB.note || '';
+  renderEvents();
+  updatePreview();
+}
+
+function renderEvents() {
+  const list = document.getElementById('ev-list');
+  list.innerHTML = '';
+  if (!DB.events.length) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">📭</div>No events yet. Add one above.</div>`;
+    return;
+  }
+  DB.events.forEach((ev, i) => list.appendChild(buildEvCard(ev, i)));
+  initDragSort(list, () => DB.events, () => { renderEvents(); updatePreview(); });
+}
+
+function buildEvCard(ev, i) {
+  const { mon, day } = dateDisplay(ev.date);
+  const tag = ev.type || 'upcoming';
+  const card = document.createElement('div');
+  card.className = 'ev-card';
+  card.setAttribute('draggable','true'); card.dataset.idx = i;
+  card.innerHTML = `
+    <div class="ev-header">
+      <div class="drag-handle" title="Drag to reorder">⠿</div><div class="ev-hdate"><div class="ev-hmon">${mon}</div><div class="ev-hday">${day}</div></div>
+      <div class="ev-hinfo">
+        <div class="ev-htitle">${ev.title}</div>
+        <div class="ev-hmeta">${ev.time || ''} · ${ev.location || ''}</div>
+      </div>
+      <span class="ev-type-tag ${TYPE_CLASS[tag]}">${TYPE_LABEL[tag]}</span>
+      <div style="display:flex;gap:.4rem;margin-left:.5rem;flex-shrink:0">
+        <button class="btn-icon danger" data-action="del">🗑</button>
+      </div>
+    </div>
+    <div class="ev-body">
+      <div class="ev-fields">
+        <div class="field full"><label>TITLE</label><input type="text" data-f="title" value="${esc(ev.title)}" placeholder="Workshop — Python Basics"></div>
+        <div class="field"><label>DATE</label><input type="date" data-f="date" value="${esc(ev.date)}"></div>
+        <div class="field"><label>TYPE</label>
+          <select data-f="type">
+            ${TYPES.map(t => `<option value="${t}" ${ev.type===t?'selected':''}>${t.charAt(0).toUpperCase()+t.slice(1)}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field"><label>TIME</label><input type="text" data-f="time" value="${esc(ev.time)}" placeholder="2:00 PM"></div>
+        <div class="field"><label>AUDIENCE</label><input type="text" data-f="audience" value="${esc(ev.audience)}" placeholder="Open to all"></div>
+        <div class="field full"><label>LOCATION</label><input type="text" data-f="location" value="${esc(ev.location)}" placeholder="Room 301, Statistics Building"></div>
+        <div class="field full"><label>UNIQUE ID (slug)</label><input type="text" data-f="id" value="${esc(ev.id)}" placeholder="ev-001"></div>
+        <div class="field full"><label>REGISTER LINK (optional — shown as Register button)</label><input type="text" data-f="register_link" value="${esc(ev.register_link)}" placeholder="https://forms.google.com/..."></div>
+        <div class="field full"><label>DETAILS LINK (optional — Facebook/LinkedIn event page)</label><input type="text" data-f="details_link" value="${esc(ev.details_link)}" placeholder="https://facebook.com/events/..."></div>
+      </div>
+    </div>`;
+
+  card.querySelector('.ev-header').addEventListener('click', e => {
+    if (e.target.closest('[data-action]') || e.target.closest('.ev-type-tag')) return;
+    card.classList.toggle('open');
+  });
+
+  card.querySelectorAll('[data-f]').forEach(el => {
+    el.addEventListener('input', e => {
+      DB.events[i][e.target.dataset.f] = e.target.value;
+      /* refresh header */
+      const { mon: m, day: d } = dateDisplay(DB.events[i].date);
+      card.querySelector('.ev-hmon').textContent = m;
+      card.querySelector('.ev-hday').textContent = d;
+      card.querySelector('.ev-htitle').textContent = DB.events[i].title;
+      card.querySelector('.ev-hmeta').textContent  = `${DB.events[i].time || ''} · ${DB.events[i].location || ''}`;
+      const t2 = DB.events[i].type || 'upcoming';
+      const tagEl = card.querySelector('.ev-type-tag');
+      tagEl.className = `ev-type-tag ${TYPE_CLASS[t2]}`;
+      tagEl.textContent = TYPE_LABEL[t2];
+      updatePreview();
+    });
+  });
+
+  card.querySelector('[data-action="del"]').addEventListener('click', e => {
+    e.stopPropagation();
+    if (!confirm(`Delete "${ev.title}"?`)) return;
+    DB.events.splice(i, 1); renderAll(); toast('Event removed', 'error');
+  });
+
+  return card;
+}
+
+/* ── NOTE ── */
+document.getElementById('note-input').addEventListener('input', e => {
+  DB.note = e.target.value; updatePreview();
+});
+
+/* ── ADD ── */
+document.getElementById('btn-add-ev').addEventListener('click', () => {
+  const today = new Date().toISOString().slice(0, 10);
+  const newEv = { id:`ev-${Date.now()}`, title:'New Event', date:today, time:'', location:'', audience:'Open to all', type:'upcoming' };
+  DB.events.push(newEv);
+  const i = DB.events.length - 1;
+  const card = buildEvCard(newEv, i);
+  card.classList.add('open');
+  const list = document.getElementById('ev-list');
+  if (list.querySelector('.empty')) list.innerHTML = '';
+  list.appendChild(card);
+  card.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  updatePreview(); toast('Event added');
+});
+
+/* ── LOAD ── */
+function emptyDB() { return { note:'', events:[] }; }
+
+function loadDB(data) {
+  DB = data;
+  document.getElementById('load-screen').style.display = 'none';
+  document.getElementById('editor-main').style.display = 'grid';
+  ['btn-load-new','btn-copy','btn-export'].forEach(id => document.getElementById(id).style.display = 'flex');
+  renderAll();
+  toast('events.json loaded ✓');
+}
+
+function parseAndLoad(file) {
+  const r = new FileReader();
+  r.onload = e => {
+    try {
+      const d = JSON.parse(e.target.result);
+      if (!d.events || !Array.isArray(d.events)) throw new Error();
+      loadDB(d);
+    } catch { toast('Invalid events.json', 'error'); }
+  };
+  r.readAsText(file);
+}
+
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('file-input');
+dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag'); });
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag'));
+dropzone.addEventListener('drop', e => { e.preventDefault(); dropzone.classList.remove('drag'); if (e.dataTransfer.files[0]) parseAndLoad(e.dataTransfer.files[0]); });
+fileInput.addEventListener('change', e => { if (e.target.files[0]) parseAndLoad(e.target.files[0]); });
+document.getElementById('btn-new').addEventListener('click', () => loadDB(emptyDB()));
+document.getElementById('btn-load-new').addEventListener('click', () => document.getElementById('reload-input').click());
+document.getElementById('reload-input').addEventListener('change', e => { if (e.target.files[0]) parseAndLoad(e.target.files[0]); });
+
+/* ── EXPORT ── */
+document.getElementById('btn-export').addEventListener('click', () => {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(DB, null, 2)], {type:'application/json'}));
+  a.download = 'events.json'; a.click();
+  toast('events.json exported ✓');
+});
+document.getElementById('btn-copy').addEventListener('click', () => {
+  navigator.clipboard.writeText(JSON.stringify(DB, null, 2))
+    .then(() => toast('Copied to clipboard ✓'))
+    .catch(() => toast('Copy failed', 'error'));
+});
+
+
+/* ── Drag-and-drop to reorder ── */
+function initDragSort(listEl, getArray, onReorder) {
+  let dragged = null;
+  listEl.addEventListener('dragstart', e => {
+    dragged = e.target.closest('[draggable]');
+    if (dragged) dragged.classList.add('dragging');
+  });
+  listEl.addEventListener('dragend', () => {
+    if (dragged) dragged.classList.remove('dragging');
+    dragged = null;
+  });
+  listEl.addEventListener('dragover', e => {
+    e.preventDefault();
+    const over = e.target.closest('[draggable]');
+    if (!over || over === dragged) return;
+    const items = [...listEl.querySelectorAll('[draggable]')];
+    const iDragged = items.indexOf(dragged);
+    const iOver    = items.indexOf(over);
+    if (iDragged < iOver) listEl.insertBefore(dragged, over.nextSibling);
+    else listEl.insertBefore(dragged, over);
+  });
+  listEl.addEventListener('drop', () => {
+    const items  = [...listEl.querySelectorAll('[draggable]')];
+    const arr    = getArray();
+    const sorted = items.map(el => arr[parseInt(el.dataset.idx)]);
+    sorted.forEach((item, i) => { arr[i] = item; });
+    onReorder();
+  });
+}
+
+function esc(s) { return (s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* Auto-load */
+fetch('events.json')
+  .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+  .then(d => { loadDB(d); toast('Auto-loaded events.json ✓'); })
+  .catch(() => {});
+</script>
+</body>
+</html>

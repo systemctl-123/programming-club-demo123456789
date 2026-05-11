@@ -328,7 +328,7 @@ async function init() {
   const { current_committee, committees } = data;
 
   /* ── Dynamic home stats ── */
-  const totalYears   = committees.length;
+  const totalYears   = new Date().getFullYear() - 2022;
   /* Fix: use total_members only if explicitly set (even 0 is valid); else count members array */
   const totalMembers = committees
     .filter(c => c.session === current_committee)

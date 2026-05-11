@@ -1,7 +1,7 @@
 # Statistics Programming Club Website
 
-<div style="height: 100%; overflow: hidden;">
-  <img src="favicon.svg" style="width: 100%; margin-top: -33%; margin-bottom: -34%">
+<div>
+  <img src="favicon.svg">
 </div>
 <br>
 

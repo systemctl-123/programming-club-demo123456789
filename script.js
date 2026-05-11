@@ -2,8 +2,6 @@
    Statistics Programming Club — script.js
    Fetches database.json, achievements.json, and
    events.json to drive the entire site.
-   To switch the active committee, change
-   "current_committee" in database.json only.
 ═══════════════════════════════════════════════ */
 
 const ICONS = {
@@ -13,6 +11,146 @@ const ICONS = {
   email:      '✉',
   codeforces: '◈'
 };
+
+/* ── Terminal Typing Animation ── */
+const TERM_LINES = [
+  { tokens: [{ t: 'cm', v: '# ML Workshop — Image Classifier' }] },
+  { tokens: [{ t: 'kw', v: 'import ' }, { t: 'tc', v: 'torch' }] },
+  { tokens: [{ t: 'kw', v: 'import ' }, { t: 'tc', v: 'torch.nn ' }, { t: 'kw', v: 'as ' }, { t: 'tc', v: 'nn' }] },
+  { tokens: [{ t: 'kw', v: 'from ' }, { t: 'tc', v: 'torchvision' }, { t: 'kw', v: ' import ' }, { t: 'tc', v: 'models' }]},
+  { tokens: [{ t: 'kw', v: 'from ' }, { t: 'tc', v: 'pcstat' }, { t: 'kw', v: ' import ' }, { t: 'tc', v: 'train' }]},
+
+  { tokens: [] },
+  { tokens: [{ t: 'fn', v: 'model' }, { t: 'tc', v: ' = models.' }, { t: 'fn', v: 'resnet18' }, { t: 'tc', v: '(\u200B' }, { t: 'tc', v: 'pretrained=' }, { t: 'kw', v: 'True' }, { t: 'tc', v: ')' }] },
+
+{ tokens: [{ t: 'fn', v: 'optimizer' }, { t: 'tc', v: ' = torch.optim.' }, { t: 'fn', v: 'Adam' }, { t: 'tc', v: '(\u200B' }, { t: 'tc', v: 'model.parameters(), lr=' }, { t: 'num', v: '1e-4' }, { t: 'tc', v: ')' }] },
+
+  { tokens: [] },
+  { tokens: [{ t: 'fn', v: 'train' }, { t: 'tc', v: '(model, epochs=' }, { t: 'num', v: '10' }, { t: 'tc', v: ')' }] },
+  { tokens: [] },
+];
+
+const TERM_RESULTS = [
+  { t: 'to', v: '❯ Training complete. Results:' },
+  { t: 'chart', v: `
+    <div class="t-chart">
+      <div class="t-bar-row">
+        <span class="t-bar-lbl">Train Acc</span>
+        <div class="t-bar-track"><div class="t-bar-fill f1"></div></div>
+        <span class="t-bar-val">92.4%</span>
+      </div>
+      <div class="t-bar-row">
+        <span class="t-bar-lbl">Val Acc</span>
+        <div class="t-bar-track"><div class="t-bar-fill f2"></div></div>
+        <span class="t-bar-val">78.1%</span>
+      </div>
+      <div class="t-bar-row">
+        <span class="t-bar-lbl">F1 Score</span>
+        <div class="t-bar-track"><div class="t-bar-fill f3"></div></div>
+        <span class="t-bar-val">0.851</span>
+      </div>
+      <div class="t-bar-row">
+        <span class="t-bar-lbl">Loss</span>
+        <div class="t-bar-track"><div class="t-bar-fill f4"></div></div>
+        <span class="t-bar-val">0.612</span>
+      </div>
+    </div>`
+  },
+  { t: 'blank', v: '' },
+];
+
+async function runTerminalAnimation() {
+  const container = document.getElementById('term-body');
+  if (!container) return;
+  container.innerHTML = '';
+
+  // 1. Type the code lines
+  for (const line of TERM_LINES) {
+    if (line.tokens.length === 0) {
+      container.innerHTML += '<div>&nbsp;</div>';
+      await new Promise(r => setTimeout(r, 100));
+      continue;
+    }
+
+    const lineDiv = document.createElement('div');
+    lineDiv.className = 'tl';
+    container.appendChild(lineDiv);
+
+    for (const token of line.tokens) {
+      const span = document.createElement('span');
+      span.className = `t-${token.t}`;
+      lineDiv.appendChild(span);
+
+      for (let i = 0; i < token.v.length; i++) {
+        span.textContent += token.v[i];
+        await new Promise(r => setTimeout(r, 30));
+      }
+    }
+    await new Promise(r => setTimeout(r, 200));
+  }
+
+  // 2. Execution "pause"
+  await new Promise(r => setTimeout(r, 600));
+
+  // 3. Pop results
+  for (const res of TERM_RESULTS) {
+    if (res.t === 'blank') {
+      container.innerHTML += '<div>&nbsp;</div>';
+    } else if (res.t === 'chart') {
+      const chartDiv = document.createElement('div');
+      chartDiv.innerHTML = res.v;
+      container.appendChild(chartDiv);
+    } else {
+      const resDiv = document.createElement('div');
+      resDiv.className = 'tl';
+      resDiv.innerHTML = `<span class="${res.t === 'prompt' ? 'tp' : 'to'}">${res.v}</span>`;
+      container.appendChild(resDiv);
+    }
+    container.scrollTop = container.scrollHeight;
+    await new Promise(r => setTimeout(r, 400));
+  }
+
+  // 4. Final cursor
+  const cursorDiv = document.createElement('div');
+  cursorDiv.className = 'tl';
+  cursorDiv.innerHTML = `<span class="tp">❯❯❯ </span><span class="tcur"></span>`;
+  container.appendChild(cursorDiv);
+}
+
+// Update init() or just call it on load
+document.addEventListener('DOMContentLoaded', () => {
+  runTerminalAnimation();
+});
+
+const SUN_ICON = `<svg viewBox="0 0 24 24" width="10" height="10" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.63" y2="5.63"></line><line x1="18.37" y1="4.22" x2="19.78" y2="5.63"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.63" y2="18.37"></line><line x1="18.37" y1="19.78" x2="19.78" y2="18.37"></line></svg>`;
+const MOON_ICON = `<svg viewBox="0 0 24 24" width="10" height="10" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+
+  const thumbs = document.querySelectorAll('.switch-thumb');
+  thumbs.forEach(thumb => {
+    thumb.innerHTML = theme === 'dark' ? MOON_ICON : SUN_ICON;
+  });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  setTheme(savedTheme);
+}
+
+document.getElementById('theme-toggle')?.addEventListener('click', () => {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+});
+
+document.getElementById('theme-toggle-mob')?.addEventListener('click', () => {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+});
+
+initTheme();
 
 /* ── Intersection observer for scroll reveals ── */
 const ro = new IntersectionObserver(
@@ -134,22 +272,44 @@ const pages   = document.querySelectorAll('.pg');
 const navItems = document.querySelectorAll('.ni');
 const mobItems = document.querySelectorAll('.mi');
 
-function navigate(id) {
+const VALID_PAGES = ['home','exec','alumni','projects','achievements','events','about'];
+
+function navigate(id, pushState = true) {
+  if (!VALID_PAGES.includes(id)) id = 'home';
   pages.forEach(p    => p.classList.toggle('active', p.id === 'page-' + id));
   navItems.forEach(n => n.classList.toggle('active', n.dataset.page === id));
   mobItems.forEach(n => n.classList.toggle('active', n.dataset.page === id));
   observeReveals(document.getElementById('page-' + id));
   window.scrollTo(0, 0);
   document.getElementById('mm').classList.remove('open');
+  document.body.style.overflow = '';
+  if (pushState) {
+    history.pushState({ page: id }, '', id === 'home' ? location.pathname : '#' + id);
+  }
 }
 
 navItems.forEach(n => n.addEventListener('click', () => navigate(n.dataset.page)));
 mobItems.forEach(n => n.addEventListener('click', () => navigate(n.dataset.page)));
 
+window.addEventListener('popstate', e => {
+  const id = e.state?.page || hashPage() || 'home';
+  navigate(id, false);
+});
+
+function hashPage() {
+  const h = location.hash.replace('#', '').trim();
+  return VALID_PAGES.includes(h) ? h : null;
+}
+
+const initialPage = hashPage() || 'home';
+if (initialPage !== 'home') navigate(initialPage, false);
+
 /* ── Mobile hamburger ── */
-document.getElementById('hbg').addEventListener('click', () =>
-  document.getElementById('mm').classList.toggle('open')
-);
+document.getElementById('hbg').addEventListener('click', () => {
+  const menu = document.getElementById('mm');
+  const isOpen = menu.classList.toggle('open');
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+});
 
 /* ══════════════════════════════════════════════
    DATA FETCH & PAGE RENDER
@@ -161,7 +321,7 @@ async function init() {
     if (!res.ok) throw new Error('Failed to load database.json');
     data = await res.json();
   } catch (err) {
-    console.error('Syntax Club DB error:', err);
+    console.error('Statistics Programming Club DB error:', err);
     return;
   }
 
@@ -262,7 +422,7 @@ async function loadAchievements() {
     grid.appendChild(card);
   });
 
-  observeReveals(document.getElementById('page-ach'));
+  observeReveals(document.getElementById('page-achievements'));
 }
 
 /* ══════════════════════════════════════════════
@@ -383,8 +543,8 @@ loadEvents();
 /* ══════════════════════════════════════════════
    PROJECTS — fetch & render
 ══════════════════════════════════════════════ */
-const STATUS_CLASS = { active:'active', completed:'completed', archived:'archived', research:'research' };
-const STATUS_LABEL = { active:'● ACTIVE', completed:'◆ COMPLETED', archived:'◇ ARCHIVED', research:'◈ RESEARCH' };
+const STATUS_CLASS = { active:'active', completed:'completed', research:'research' };
+const STATUS_LABEL = { active:'● ACTIVE', completed:'◆ COMPLETED', research:'◈ RESEARCH' };
 
 async function loadProjects() {
   let data;
@@ -415,8 +575,9 @@ async function loadProjects() {
     const repoHtml = p.link
       ? `<a class="proj-link repo" href="${p.link}" target="_blank" rel="noopener noreferrer">⌥ Repo ↗</a>`
       : '';
+    const demoText = p.status === 'research' ? '⬡ DOI ↗' : '⬡ Visit ↗';
     const demoHtml = p.demo_link
-      ? `<a class="proj-link demo" href="${p.demo_link}" target="_blank" rel="noopener noreferrer">⬡ Demo ↗</a>`
+      ? `<a class="proj-link demo" href="${p.demo_link}" target="_blank" rel="noopener noreferrer">${demoText}</a>`
       : '';
     const linksHtml = (repoHtml || demoHtml)
       ? `<div class="proj-links">${repoHtml}${demoHtml}</div>`

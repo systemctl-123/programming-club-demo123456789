@@ -8,6 +8,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="style.css">
+
+  <meta name="description" content="A community of data-driven programmers. Competitive programming, machine learning projects, and weekly meetups at the Department of Statistics, CU.">
+  <link rel="canonical" href="https://pcstat.org/">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Statistics Programming Club - CU">
+  <meta property="og:description" content="We write code. We build things. We compete.">
+  <meta property="og:image" content="https://pcstat.org/favicon.svg">
+  <meta property="og:url" content="https://pcstat.svg/">
+  <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 
@@ -182,9 +191,15 @@
       <div class="pe">// Our Work</div>
       <h2 class="pt">Club <span>Projects & Publications</span></h2>
       <p class="pd">Open-source tools, research projects, and applications built by club members.</p>
+
+      <div class="proj-toggle" id="proj-toggle">
+        <button class="pt-btn active" data-tab="all">All</button>
+        <button class="pt-btn" data-tab="projects">Projects</button>
+        <button class="pt-btn" data-tab="publications">Publications</button>
+      </div>
     </div>
 
-    <!-- Project cards injected by script.js from projects.json → projects[] -->
+    <!-- Projects Grid -->
     <div class="proj-grid rv" id="proj-grid"></div>
   </section>
 

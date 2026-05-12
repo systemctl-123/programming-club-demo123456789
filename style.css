@@ -59,6 +59,8 @@
   --bl:#58a6ff;--bld:rgba(88,166,255,.1);--or:#f0883e;
   --pu:#a78bfa;--pud:rgba(167,139,250,.1);--py:#fbbf24;--rp:#3b79f5;
   --btn-txt:#000;--repo-bg:#00d97e;--demo-bg:#9f80fe;
+  --toggle-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 15px rgba(255,255,255,0.03);
+  --toggle-inner: inset 0 1px 1px rgba(255,255,255,0.1);
   /* --nav-bg:rgba(13,17,23,.92); */
   /* fh for headings, fb for body & fm for coding;
     Options:
@@ -75,6 +77,8 @@
   --bl:#1d4ed8;--bld:rgba(29,78,216,.1);--or:#c2410c;
   --pu:#7c3aed;--pud:rgba(124,58,237,.1);--py:#b45309;--rp:#1e40af;
   --btn-txt:#fff;--repo-bg:#00b366;--demo-bg:#7c3aed;
+  --toggle-shadow: 0 10px 30px rgba(0,0,0,0.15), 0 0 10px rgba(0,0,0,0.05);
+  --toggle-inner: inset 0 1px 1px rgba(0,0,0,0.1);
   /* --nav-bg:rgba(255,255,255,.92); */
 }
 
@@ -428,11 +432,85 @@ ul{list-style:none}
 .proj-link.demo{background:var(--demo-bg);color:var(--btn-txt);border-color:var(--demo-bg);font-weight:600}
 .proj-link.demo:hover{background:var(--btn-txt);color:var(--demo-bg);border-color:var(--demo-bg)}
 
-/* Drag handle */
-.drag-handle{cursor:grab;color:var(--mut);font-size:1rem;padding:.2rem .3rem;border-radius:4px;transition:color .15s,background .15s;user-select:none;flex-shrink:0;}
-.drag-handle:active{cursor:grabbing;}
-.drag-handle:hover{color:var(--txt);background:var(--s3);}
-.dragging{opacity:.4;border:1px dashed var(--b3)!important;}
+/* Project Toggle - Technical Segmented Control */
+.proj-toggle {
+  display: inline-flex;
+  background: var(--surface);
+  border: 1px solid var(--b2);
+  border-radius: 6px;
+  padding: 4px;
+  gap: 4px;
+  align-self: center;
+  margin-top: 1.5rem;
+  width: fit-content;
+  box-shadow: var(--toggle-shadow);
+  position: relative;
+}
+
+.proj-toggle::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  box-shadow: var(--toggle-inner);
+  pointer-events: none;
+}
+
+.pt-btn {
+  font-family: var(--fm);
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mut);
+  background: transparent;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.pt-btn:hover {
+  color: var(--txt);
+  background: var(--s2);
+}
+
+.pt-btn.active {
+  background: var(--ac);
+  color: #000;
+  box-shadow: 0 0 15px var(--acg);
+  transform: translateY(-1px);
+}
+
+.pt-btn.active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(rgba(255,255,255,0.2), transparent);
+  pointer-events: none;
+}
+
+.proj-panel {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.proj-panel.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.proj-panel:not(.active) {
+  display: none;
+  opacity: 0;
+  transform: translateY(10px);
+}
 
 /* ── ABOUT ── */
 .abg{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-bottom:2.5rem}
@@ -652,7 +730,7 @@ ul{list-style:none}
   padding: .2rem .6rem;
   border-radius: 4px;
   background: var(--s2);
-  border: 1px solid var(--mut);
+  border: 1px solid var(--b2);
   color: var(--txt);
 }
 

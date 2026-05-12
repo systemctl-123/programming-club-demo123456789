@@ -559,7 +559,9 @@ async function loadProjects() {
 
   /* Update projects stat on home page */
   const statProjects = document.getElementById('stat-projects');
-  if (statProjects) statProjects.textContent = projects.length;
+  const statPubs = document.getElementById('stat-pubs');
+  if (statProjects) statProjects.textContent = projects.filter(p => p.status !== 'publication' && p.status !== 'research').length;
+  if (statPubs) statPubs.textContent = projects.filter(p => p.status === 'publication' || p.status === 'research').length;
 
   const projGrid = document.getElementById('proj-grid');
   if (!projGrid) return;

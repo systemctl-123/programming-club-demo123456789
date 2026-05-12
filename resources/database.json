@@ -13,7 +13,7 @@
           "role_display": "// CHIEF ENGINEER",
           "name": "Elon Musk",
           "department": "Multi-Planetary · Year X",
-          "is_president": true,
+          "is_president": false,
           "bio": "Founder of SpaceX and Tesla. Engineering first principles advocate. Focused on making humanity multi-planetary.",
           "socials": [
             { "type": "twitter", "label": "X", "url": "https://x.com/elonmusk" },

@@ -259,8 +259,8 @@ ul{list-style:none}
   display:grid;grid-template-columns:1fr 1fr;gap:3rem;
   align-items:center;justify-items:center;padding:3rem 0
 }
-.hero-left{display:flex;flex-direction:column;justify-content:center;max-width: 600px;}
-.hero-right{display:flex;flex-direction:column;gap:1.5rem;max-width: 600px;}
+.hero-left{display:flex;flex-direction:column;justify-content:center;max-width: 670px;}
+.hero-right{display:flex;flex-direction:column;gap:1.5rem;max-width: 670px;}
 
 .htag{
   font-family:var(--fm);font-size:.74rem;color:var(--ac);

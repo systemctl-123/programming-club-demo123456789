@@ -506,8 +506,6 @@ async function loadEvents() {
     const day        = d.getDate();
     const tag        = ev.type || 'upcoming';
     const countdown  = getCountdown(ev.date, ev.time);
-    const isNearest  = idx === 0;
-
     const registerHtml = ev.register_link
       ? `<a class="ev-action-link register" href="${ev.register_link}" target="_blank" rel="noopener noreferrer">✎ Register</a>`
       : '';
@@ -519,7 +517,7 @@ async function loadEvents() {
       : '';
 
     const row = document.createElement('div');
-    row.className = 'ev' + (isNearest ? ' ev-nearest' : '');
+    row.className = 'ev';
     row.innerHTML = `
       <div><div class="emo">${mon}</div><div class="edy">${day}</div></div>
       <div>
@@ -557,33 +555,67 @@ async function loadProjects() {
     return;
   }
 
-  const grid = document.getElementById('proj-grid');
-  if (!grid || !data.projects) return;
-  grid.innerHTML = '';
+  const projects = data.projects || [];
 
   /* Update projects stat on home page */
   const statProjects = document.getElementById('stat-projects');
-  if (statProjects) statProjects.textContent = data.projects.length;
+  if (statProjects) statProjects.textContent = projects.length;
 
-  data.projects.forEach(p => {
-    const card = document.createElement('div');
-    card.className = 'proj-card';
-    const statusCls = STATUS_CLASS[p.status] || 'active';
-    const statusLbl = STATUS_LABEL[p.status] || '● ACTIVE';
-    const tags = (p.tags || []).map(t => `<span class="proj-tag">${t}</span>`).join('');
+  const projGrid = document.getElementById('proj-grid');
+  if (!projGrid) return;
 
-    const repoHtml = p.link
-      ? `<a class="proj-link repo" href="${p.link}" target="_blank" rel="noopener noreferrer">⌥ Repo ↗</a>`
-      : '';
-    const demoText = p.status === 'research' ? '⬡ DOI ↗' : '⬡ Visit ↗';
-    const demoHtml = p.demo_link
-      ? `<a class="proj-link demo" href="${p.demo_link}" target="_blank" rel="noopener noreferrer">${demoText}</a>`
-      : '';
-    const linksHtml = (repoHtml || demoHtml)
-      ? `<div class="proj-links">${repoHtml}${demoHtml}</div>`
-      : '';
+  function renderFilteredProjects(tab) {
+    let filtered;
+    if (tab === 'projects') {
+      filtered = projects.filter(p => p.status !== 'publication' && p.status !== 'research');
+    } else if (tab === 'publications') {
+      filtered = projects.filter(p => p.status === 'publication' || p.status === 'research');
+    } else {
+      filtered = projects;
+    }
 
-    card.innerHTML = `
+    // Sort by featured first
+    filtered.sort((a, b) => (a.featured === b.featured ? 0 : a.featured ? -1 : 1));
+
+    projGrid.innerHTML = filtered.length
+      ? filtered.map((p, i) => buildProjectCard(p, i)).join('')
+      : `<p style="font-family:var(--fm);font-size:.78rem;color:var(--mut);padding:2rem 0;">// No items found in this category.</p>`;
+
+    observeReveals(projGrid);
+  }
+
+  /* Handle Toggle */
+  const toggleButtons = document.querySelectorAll('.pt-btn');
+  toggleButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      toggleButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderFilteredProjects(btn.dataset.tab);
+    });
+  });
+
+  // Initial render
+  renderFilteredProjects('all');
+}
+
+function buildProjectCard(p, idx) {
+  const statusCls = STATUS_CLASS[p.status] || 'active';
+  const statusLbl = STATUS_LABEL[p.status] || '● ACTIVE';
+  const tags = (p.tags || []).map(t => `<span class="proj-tag">${t}</span>`).join('');
+
+  const repoHtml = p.link
+    ? `<a class="proj-link repo" href="${p.link}" target="_blank" rel="noopener noreferrer">⌥ Repo ↗</a>`
+    : '';
+  const demoText = p.status === 'research' ? '⬡ DOI ↗' : '⬡ Visit ↗';
+  const demoHtml = p.demo_link
+    ? `<a class="proj-link demo" href="${p.demo_link}" target="_blank" rel="noopener noreferrer">${demoText}</a>`
+    : '';
+  const linksHtml = (repoHtml || demoHtml)
+    ? `<div class="proj-links">${repoHtml}${demoHtml}</div>`
+    : '';
+
+  return `
+    <div class="proj-card">
       <div class="proj-status ${statusCls}">
         <span class="proj-status-dot"></span>${statusLbl}
       </div>
@@ -593,11 +625,8 @@ async function loadProjects() {
       <div class="proj-footer">
         <span class="proj-members">👥 ${p.members}</span>
         ${linksHtml}
-      </div>`;
-    grid.appendChild(card);
-  });
-
-  observeReveals(document.getElementById('page-projects'));
+      </div>
+    </div>`;
 }
 
 loadProjects();

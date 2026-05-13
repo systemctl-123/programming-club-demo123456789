@@ -1,7 +1,7 @@
 # Statistics Programming Club Website
 
-<div>
-  <img src="favicon.svg">
+<div style="height: 100%; overflow: hidden;">
+  <img src="favicon.svg" style="width: 100%;">
 </div>
 <br>
 
@@ -11,11 +11,11 @@
 
 ## 👥 Repo Maintainers
 
-Hi, I'm **Naim [2021-22]**, the creator of this website. If you ever have the opportunity to maintain this repo, drop your name below. 🙌
+Hi, I'm **Naim [2021-22]**, the creator of this website. If you ever have the opportunity to maintain this repo, drop your name below.
 
-| Name | Role | Year |
-|---|---|---|
-| *Muhammad N. Naim* | Creator | *2026* |
+| Name | Role | Year | Email
+|---|---|---|---|
+| **Muhammad N. Naim** | **Creator** | **2026** |   |
 
 ---
 
@@ -28,6 +28,7 @@ home/
 ├── script.js             # All logic — fetches and renders all JSON data
 ├── favicon.svg           # Club logo
 ├── README.md             # You are here
+├── fonts/                # Custom fonts for the website
 └── resources/            # ⭐ All data files and visual editors live here
     ├── database.json             # Executive member / committee data
     ├── achievements.json         # Achievements + tally strip data
@@ -98,9 +99,10 @@ All data files live inside `resources/`. Here is the full schema for each.
 | `members` | `array` | List of member objects (see below). |
 
 > **Home page stats logic:**
-> - `// YEARS` = number of committees in the file (one committee = one academic year)
+> - `// YEARS` = current year minus 2022
 > - `// MEMBERS` = `total_members` of the current committee (falls back to `members.length` if `total_members` is not set)
-> - `// PROJECTS` = count of entries in `projects.json`
+> - `// PROJECTS` = count of entries in `projects.json` (excluding publications and research)
+> - `// PUBLICATIONS` = count of entries in `projects.json` with status `publication` or `research``
 
 #### Member Object
 
@@ -359,8 +361,30 @@ GitHub Pages redeploys automatically within a minute or two.
 | About / Join | `?` | Static HTML in `index.html` |
 
 ---
+ 
+## 🛠️ Technical Implementation
 
-## 🎨 Customising the Site
+The website is built as a lightweight Single Page Application (SPA) to ensure fast transitions and a seamless user experience.
+
+### 🚀 Routing & Navigation
+The site uses a **custom hash-based router** in `script.js`. Instead of loading separate HTML files, it toggles the visibility of `<section>` elements based on the URL hash (e.g., `#projects`). This allows for instant page switches without full browser reloads.
+
+### 🌓 Theme System
+A dynamic light/dark mode is implemented using CSS variables.
+- **Persistence:** The selected theme is stored in `localStorage`, so the user's preference is remembered across sessions.
+- **Implementation:** The `data-theme` attribute is applied to the `<html>` element to trigger the corresponding CSS variable set.
+
+### ✨ Visual Effects & Animations
+- **Scroll Reveals:** An `IntersectionObserver` in `script.js` monitors elements with the `.rv` class. When they enter the viewport, the `.vis` class is added, triggering a CSS fade-up animation.
+- **Terminal Typing:** The home page features a simulated terminal. The code and results are stored as arrays of tokens in `script.js`, which are typed out character-by-character using asynchronous delays.
+
+### 🔤 Typography & Icons
+The site uses a curated set of **locally hosted Nerd Fonts** (found in `fonts/`) to achieve its "coding" aesthetic. This ensures that special symbols (like the sidebar icons) render consistently across all devices without relying on external CDN fonts.
+
+### 📱 Responsiveness
+The site is designed to be fully responsive. Instead of traditional fixed-width breakpoints, it uses **aspect-ratio-based media queries** (calculated relative to a base height of 764px). This ensures the layout adapts based on the screen's proportions, providing a consistent experience across various device shapes.
+
+
 
 ### Changing the accent color
 Open `style.css` and update the `--ac` variable:

@@ -1,15 +1,3 @@
-/* ── Fira Code ── */
-@font-face {
-  font-family: 'FiraCode';
-  src: url('fonts/FiraCodeNerdFontMono-Regular.ttf') format('truetype');
-  font-weight: 400;
-}
-@font-face {
-  font-family: 'FiraCode';
-  src: url('fonts/FiraCodeNerdFontMono-Bold.ttf') format('truetype');
-  font-weight: 700;
-}
-
 /* ── Space Mono ── */
 @font-face {
   font-family: 'SpaceMono';
@@ -22,24 +10,6 @@
   font-weight: 700;
 }
 
-/* ── BigBlue Terminal ── */
-@font-face {
-  font-family: 'BigBlueTerminal';
-  src: url('fonts/BigBlueTermPlusNerdFontMono-Regular.ttf') format('truetype');
-  font-weight: 400;
-}
-
-/* ── 0xProto ── */
-@font-face {
-  font-family: '0xProto';
-  src: url('fonts/0xProtoNerdFontMono-Regular.ttf') format('truetype');
-  font-weight: 400;
-}
-@font-face {
-  font-family: '0xProto';
-  src: url('fonts/0xProtoNerdFontMono-Bold.ttf') format('truetype');
-  font-weight: 700;
-}
 
 /* ── Syne ── */
 @font-face {
@@ -64,10 +34,7 @@
   --toggle-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 15px rgba(255,255,255,0.03);
   --toggle-inner: inset 0 1px 1px rgba(255,255,255,0.1);
   /* --nav-bg:rgba(13,17,23,.92); */
-  /* fh for headings, fb for body & fm for coding;
-    Options:
-      FiraCode, BigBlueTerminal, SpaceMono, 0xProto, Syne */
-  --fh: 'Syne', monospace, monospace;--fb: 'FiraCode', monospace;--fm: 'SpaceMono', monospace;
+  --fh: 'Syne', monospace;--fm: 'SpaceMono', monospace;
   --nw:300px;--nc:64px;--nh:60px;--ease:.28s cubic-bezier(.4,0,.2,1)
 }
 
@@ -91,7 +58,7 @@ html{scroll-behavior:smooth}
 h1,h2,h3,h4,h5,h6{font-family:var(--fh)}
 
 body{
-  font-family:var(--fb);
+  font-family:var(--fm);
   background:var(--bg);
   color:var(--txt);
   min-height:100vh;
@@ -125,6 +92,8 @@ a{color:inherit;text-decoration:none}
 ul{list-style:none}
 
 /* ── SIDEBAR ── */
+.pcs{color: var(--txt);font-weight: 700;}
+
 .sb{
   position:fixed;top:0;left:0;bottom:0;
   width:var(--nw);background:var(--surface);
@@ -160,7 +129,7 @@ ul{list-style:none}
 .sbt svg{transition:transform var(--ease)}
 .sb.col .sbt svg{transform:rotate(180deg)}
 
-.nis{flex:1;padding:.6rem .45rem;display:flex;flex-direction:column;gap:.2rem;overflow:hidden}
+.nis{flex:1;padding:.6rem .45rem;display:flex;flex-direction:column;gap:.2rem;overflow-y:auto}
 
 .ni{
   display:flex;align-items:center;gap:.8rem;
@@ -263,7 +232,7 @@ ul{list-style:none}
 .hero-right{display:flex;flex-direction:column;gap:1.5rem;max-width: 670px;}
 
 .htag{
-  font-family:var(--fm);font-size:.74rem;color:var(--ac);
+  font-family:var(--fm);font-size:.74rem;color:var(--ac);font-weight: 800;
   letter-spacing:.12em;margin-bottom:1.5rem;
   display:flex;align-items:center;gap:.6rem;
   opacity:0;animation:fadeUp .7s ease .1s both
@@ -332,10 +301,10 @@ ul{list-style:none}
 /* ── PAGE HEADERS ── */
 .ph{margin-bottom:2.5rem;padding-bottom:2rem}
 #page-projects .ph{margin-bottom:1rem}
-.pe{font-family:var(--fm);font-size:.7rem;color:var(--ac);letter-spacing:.14em;margin-bottom:.7rem}
+.pe{font-family:var(--fm);font-size:.7rem;color:var(--ac);letter-spacing:.14em;margin-bottom:.7rem;font-weight: 800;}
 .pt{font-size:clamp(2.5rem,6vw,4rem);font-weight:800;letter-spacing:-.02em;line-height:1.1}
 .pt span{color:var(--ac)}
-.pd{color:var(--mut);margin-top:.7rem;max-width:60ch;font-weight:400;font-size:1.2rem}
+.pd{color:var(--mut);margin-top:.7rem;max-width:60ch;font-family:var(--fm);font-weight:400;font-size:1.2rem}
 .sbadge{display:inline-flex;align-items:center;gap:.5rem;padding:.32rem .85rem;border:1px solid var(--b2);border-radius:20px;font-family:var(--fm);font-size:.66rem;color:var(--mut);margin-top:.9rem}
 .bdot{width:6px;height:6px;border-radius:50%;background:var(--ac);animation:pulse 2s ease infinite}
 
@@ -610,7 +579,7 @@ ul{list-style:none}
 .rv.vis{opacity:1;transform:none}
 
 /* ── RESPONSIVE ── */
-@media(max-width:1000px){
+@media(max-aspect-ratio: 1000/764){
   .sb{display:none}
   .tn{display:flex}
   .ct{margin-left:0!important;padding-top:var(--nh)}
@@ -628,7 +597,7 @@ ul{list-style:none}
   }
 }
 
-@media(max-width:650px){
+@media(max-aspect-ratio: 650/764){
   .egrid{grid-template-columns:1fr}
   .proj-grid{grid-template-columns:1fr}
   .hero{
@@ -639,7 +608,7 @@ ul{list-style:none}
   }
 }
 
-@media (max-width: 250px) {
+@media (max-aspect-ratio: 250/764) {
   .stats { grid-template-columns: 1fr; }
 }
 
